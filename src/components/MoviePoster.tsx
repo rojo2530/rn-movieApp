@@ -9,7 +9,7 @@ interface Props {
   width?: number;
 }
 
-export const MoviePoster = ({ movie, height = 420, width = 300 }: Props) => {
+export const MoviePoster = ({ movie, height = 420, width = 290 }: Props) => {
   const uri = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
 
   return (
