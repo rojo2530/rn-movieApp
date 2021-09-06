@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, Dimensions, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Dimensions,
+  Text,
+  View,
+  FlatList,
+  ScrollView,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MoviePoster } from '../components/MoviePoster';
 import { useMovies } from '../hooks/useMovies';
@@ -24,22 +31,38 @@ export const HomeScreen = () => {
   console.log(moviesActual.length);
 
   return (
-    <View style={{ marginTop: top + 20 }}>
-      <View
-        style={{
-          height: 440,
-        }}>
-        <Carousel
-          data={moviesActual}
-          renderItem={({ item }) => <MoviePoster movie={item} />}
-          sliderWidth={windowWith}
-          itemWidth={300}
-          // firstItem={17}
-          // onSnapToItem={index => setActiveIndex(index)}
-        />
-      </View>
+    <ScrollView>
+      <View style={{ marginTop: top + 20 }}>
+        {/* Carousel Movies */}
+        <View
+          style={{
+            height: 440,
+          }}>
+          <Carousel
+            data={moviesActual}
+            renderItem={({ item }) => <MoviePoster movie={item} />}
+            sliderWidth={windowWith}
+            itemWidth={300}
+            // firstItem={17}
+            // onSnapToItem={index => setActiveIndex(index)}
+          />
+        </View>
+        {/* Movies popular */}
+        <View style={{ backgroundColor: 'red', height: 260 }}>
+          <Text style={{ fontSize: 30, fontWeight: 'bold' }}>En cine</Text>
+          <FlatList
+            data={moviesActual}
+            renderItem={({ item }) => (
+              <MoviePoster movie={item} height={200} width={140} />
+            )}
+            keyExtractor={item => item.id.toString()}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
 
-      {/* <MoviePoster movie={moviesActual[0]} /> */}
-    </View>
+        {/* <MoviePoster movie={moviesActual[0]} /> */}
+      </View>
+    </ScrollView>
   );
 };
